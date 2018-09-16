@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!-- mybatis中，映射文件中的namespace是用于绑定Dao接口的，即面向接口编程，无需实现类 -->
+<!-- 当namespace绑定接口后，就可以不用写接口实现类（超链接三跳），mybatis会通过该绑定自动，自动找到对应要执行的SQL语句 -->
+<!-- 注意接口中的方法与映射文件中的SQL语句的ID一一对应 -->
+<mapper namespace="com.heitian.ssm.dao.StudentDao">
+
+    <!-- 原本的几个工程中，使用了package配置，所以mapper和接口在同一个包里 -->
+    <!-- 这个工程中，采用了不一样的mapper，所以接口和mapper可以地理分离 -->
+    <!-- mybatis允许使用注解将xml写成java接口的形式，其实是本同的 -->
+
+    <resultMap id="UserBaseMap" type="com.heitian.ssm.model.User">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+        <result column="user_phone" property="userPhone" jdbcType="VARCHAR"/>
+        <result column="user_email" property="userEmail" jdbcType="VARCHAR"/>
+        <result column="user_pwd" property="userPwd" jdbcType="VARCHAR"/>
+        <result column="pwd_salt" property="pwdSalt" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="DATE"/>
+        <result column="modify_time" property="modifyTime" jdbcType="DATE"/>
+        <result column="is_delete" property="isDelete" jdbcType="SMALLINT"></result>
+    </resultMap>
+
+    <select id="selectUserById" parameterType="java.lang.Long" resultMap="UserBaseMap">
+        SELECT * FROM t_user
+        WHERE id = #{userId}
+    </select>
+
+</mapper>
